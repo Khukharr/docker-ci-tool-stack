@@ -1,7 +1,8 @@
 credentials:1.24
-git:2.4.0
-git-client:1.19.0
-scm-api:0.2
+git:2.4.1
+git-client:1.19.2
+gitlab-plugin:1.1.28
+scm-api:1.0
 rebuild:1.25
 jobConfigHistory:2.12
 plugin-usage-plugin:0.3

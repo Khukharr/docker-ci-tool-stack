@@ -10,52 +10,18 @@ jenkins:
   links:
     - nexus:nexus
     - gitlab:gitlab
-    - sonar:sonar
-    - selhub:hub
-
-sonar:
-  build: ./sonar
-  ports:
-   - "19000:9000"
-   - "5432:5432"
-  environment:
-   - SONARQUBE_JDBC_URL=jdbc:postgresql://localhost:5432/sonar
-db:
-  image: postgres
-  net: container:sonar
-  environment:
-   - POSTGRES_USER=sonar
-   - POSTGRES_PASSWORD=sonar
-
-selhub:
-  image: selenium/hub
-  ports:
-    - 4444:4444
-
-nodeff:
-  image: selenium/node-firefox-debug
-  ports:
-    - 5900
-  links:
-    - selhub:hub
-
-nodechrome:
-  image: selenium/node-chrome-debug
-  ports:
-    - 5900
-  links:
-    - selhub:hub
 
 postgresql:
-  image: sameersbn/postgresql:9.4-3
+  image: sameersbn/postgresql:9.4-12
   environment:
     - DB_USER=gitlab
     - DB_PASS=password
     - DB_NAME=gitlabhq_production
   volumes:
     - /srv/docker/gitlab/postgresql:/var/lib/postgresql
+
 gitlab:
-  image: sameersbn/gitlab:8.0.3
+  image: sameersbn/gitlab:8.3.1
   links:
     - redis:redisio
     - postgresql:postgresql
@@ -63,10 +29,10 @@ gitlab:
     - "10080:80"
     - "10022:22"
   environment:
-    - TZ=Europe/Berlin
-    - GITLAB_TIMEZONE=Berlin
+    - TZ=America/New_York
+    - GITLAB_TIMEZONE=America/New_York
 
-    - GITLAB_SECRETS_DB_KEY_BASE=long-and-random-alphanumeric-string
+    - GITLAB_SECRETS_DB_KEY_BASE=2577f675-b68e-43ed-a75e-6bc9b1b843a4
 
     - GITLAB_HOST=localhost
     - GITLAB_PORT=10080
@@ -100,6 +66,7 @@ gitlab:
     - IMAP_STARTTLS=false
   volumes:
     - /srv/docker/gitlab/gitlab:/home/git/data
+
 redis:
   image: sameersbn/redis:latest
   volumes:
