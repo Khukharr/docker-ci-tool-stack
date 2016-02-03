@@ -1,9 +1,11 @@
 nexus:
+  restart: always
   build: ./nexus
   ports:
     - "18081:8081"
 
 jenkins:
+  restart: always
   build: ./jenkins
   ports:
     - "18080:8080"
@@ -12,6 +14,7 @@ jenkins:
     - gitlab:gitlab
 
 postgresql:
+  restart: always
   image: sameersbn/postgresql:9.4-12
   environment:
     - DB_USER=gitlab
@@ -21,6 +24,7 @@ postgresql:
     - /srv/docker/gitlab/postgresql:/var/lib/postgresql
 
 gitlab:
+  restart: always
   image: sameersbn/gitlab:8.3.1
   links:
     - redis:redisio
@@ -68,6 +72,7 @@ gitlab:
     - /srv/docker/gitlab/gitlab:/home/git/data
 
 redis:
+  restart: always
   image: sameersbn/redis:latest
   volumes:
     - /srv/docker/gitlab/redis:/var/lib/redis
